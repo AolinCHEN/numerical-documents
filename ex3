@@ -1,0 +1,10 @@
+##ex3.3
+ls -1 ./coreutils-8.25/src |grep -v POINT |wc -l
+##ex3.4
+ls -1 ./coreutils-8.25/src | cut -d "." -f2| sort -u |wc -w
+##ex3.5
+#!bin/bash 
+list=$(ls -1 ./coreutils-8.25/src| cut -d "." -f2|sort u)
+for i in $list ;do
+ echo $i ":"wc -l $find  ./coreutils-8.25/src |grep "$i$"
+ echo done
