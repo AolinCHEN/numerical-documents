@@ -1,0 +1,9 @@
+#! /bin/bash
+
+sed -i -e "s/BEGIN:VEVENT/<VEVENT>/g" -e "s/END:VEVENT/<\/VEVENT>/g" -e "s/DESCRIPTION:/<DESCRIPTION>/" -e "/LAST-MODIFIED:/i\<\/DESCRIPTION>" -e "s/SUMMARY:/<SUMMARY>/" -e "/TRANSP:/i\<\/SUMMARY>" Cal.ics
+array_title=("DTSTART" "DTEND" "DTSTAMP" "UID" "CREATED" "LAST-MODIFIED" "LOCATION" "SEQUENCE" "STATUS" "TRANSP")
+for i in ${array_title[@]};do 
+ sed -i -e "s/$i/<$i>/g" -e "/$i.*/ s/$/<\/$i>/" Cal.ics #there is a space in front of s(substitute)
+ 
+done
+
