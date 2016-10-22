@@ -1,0 +1,28 @@
+#!/bin/bash
+# remove all spaces first
+find rateyourmusic.com -name "*.html" | while read FILE; do
+ #echo ${FILE}
+
+ newname="$(echo ${FILE} | sed s'/ //'g | sed s'/\(.*e([Vv]ol.\)\(.*\)\():.*\)/\2/'g | sed -e s'/\(^I,\)N[oº].\(.*\)/1-\2/'g -e s'/\(^II,\)N[oº].\(.*\)/2-\2/'g -e s'/\(^III,\)\(N.*\)\([0-9].*\)/3-\3/'g -e s'/\(^IV,\)N[oº].\(.*\)/4-\2/'g)"
+
+  a=$(echo $newname | cut -d "-" -f 1)
+  b=$(echo $newname | cut -d "-" -f 2 | sed s'/\(.*\)\(bis$\)/\1/'g)
+  c=$(echo $newname | cut -d "-" -f 2 | sed s'/\(.*\)\(bis$\)/\2/'g)
+  #be careful that there is always a space between each variable operator or asignment fucking complex !
+  if [[ $c == "bis" ]] 
+  then
+   bname="$(printf "%d-%02d%s\n" $a $b $c)" 
+   #echo $bname
+  elif [[ $c != "bis" ]]
+  then 
+   bname="$(printf "%d-%02d\n" $a $b)" 
+   #echo $bname
+  fi
+  cp "${FILE}" rateyourmusic1.com 
+  mv "${FILE}" "${bname}"
+  cp "$bname" OUT-1 
+  rm "${bname}"
+ # elif [$c != "bis"]; then
+ ##  printf "%d-%02d\n" $a $b
+  
+done
